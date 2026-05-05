@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Les Trois Gourmands — Charlie Lopez</title>
+<meta name="description" content="Vendeur en boulangerie aux Trois Gourmands, Le Grau-du-Roi." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Syne:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="loader">
+  <div class="loader__inner">
+    <div class="loader__count"><span id="count">0</span><i>%</i></div>
+    <div class="loader__bar"><span></span></div>
+    <div class="loader__name">PROJECT&nbsp;04 / TROIS&nbsp;GOURMANDS</div>
+  </div>
+</div>
+
+<div class="cursor"></div>
+<div class="noise"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav__logo" data-cursor="hover">CL<span>©</span></a>
+  <nav class="nav__menu">
+    <a href="../index.html#about" data-cursor="hover">À propos</a>
+    <a href="../index.html#work" data-cursor="hover">Projets</a>
+    <a href="../index.html#skills" data-cursor="hover">Skills</a>
+    <a href="../index.html#contact" data-cursor="hover">Contact</a>
+  </nav>
+  <a href="mailto:charlielpz05@gmail.com" class="nav__cta" data-cursor="hover">
+    <span>Disponible</span>
+    <i></i>
+  </a>
+</header>
+
+<main>
+
+  <section class="project-hero">
+    <a href="../index.html#work" class="project-back" data-cursor="hover">← Retour aux projets</a>
+
+    <div class="project-meta">
+      <span>● PROJET 04 / 04</span>
+      <span>2 mois</span>
+    </div>
+
+    <h1 class="project-title">
+      Les Trois<br>
+      <em>Gourmands</em>
+    </h1>
+
+    <div class="project-info">
+      <div>
+        <span>Rôle</span>
+        <p>Vendeur boulangerie</p>
+      </div>
+      <div>
+        <span>Durée</span>
+        <p>2 mois</p>
+      </div>
+      <div>
+        <span>Localisation</span>
+        <p>Le Grau-du-Roi</p>
+      </div>
+      <div>
+        <span>Secteur</span>
+        <p>Retail · Boulangerie</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-visual" style="background:linear-gradient(135deg,#1a1a1a 0%,#5b21b6 60%,#8b5cf6 100%);"></div>
+
+  <section class="project-content">
+    <h2>L'expérience</h2>
+    <div class="body">
+      <p>
+        Mission de deux mois aux Trois Gourmands, une <strong>boulangerie-pâtisserie de quartier</strong> au Grau-du-Roi. Au-delà de la vente, j'y ai appris la rigueur du commerce de proximité, l'importance d'une présentation soignée et la satisfaction d'un service rapide pendant les rushes du matin.
+      </p>
+      <p>
+        Une expérience qui aiguise <strong>l'œil pour le détail</strong> — la mise en place d'une vitrine, c'est déjà du design.
+      </p>
+    </div>
+  </section>
+
+  <section class="project-content">
+    <h2>Mes missions</h2>
+    <div class="body">
+      <ul>
+        <li>Mise en place de la vitrine (pain, pâtisseries, salé)</li>
+        <li>Vente &amp; encaissement</li>
+        <li>Gestion quotidienne de la boulangerie</li>
+        <li>Cuisson du pain en cours de journée</li>
+        <li>Réception &amp; contrôle des commandes fournisseurs</li>
+      </ul>
+
+      <div class="project-tags">
+        <span>Vente</span>
+        <span>Mise en place</span>
+        <span>Polyvalence</span>
+        <span>Ponctualité</span>
+        <span>Esprit d'équipe</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-gallery">
+    <div class="tile wide" style="background:linear-gradient(120deg,#1a1a1a,#5b21b6 50%,#8b5cf6);"></div>
+    <div class="tile" style="background:linear-gradient(135deg,#5b21b6,#8b5cf6);"></div>
+    <div class="tile" style="background:linear-gradient(220deg,#0d0d0c,#8b5cf6);"></div>
+  </div>
+
+  <section class="project-next">
+    <a href="conseil-gard.html" data-cursor="view">
+      <span>↗ Retour au début — 01 / 04</span>
+      <h3>
+        Conseil Départemental du Gard
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none"><path d="M5 5l50 50M55 55V10M55 55H10" stroke="currentColor" stroke-width="2"/></svg>
+      </h3>
+    </a>
+    <footer class="footer" style="margin-top:30px;">
+      <span>© 2026 Charlie Lopez</span>
+      <span>Built with Three.js · Lenis · GSAP</span>
+      <a href="../index.html#home" data-cursor="hover">↑ Back to top</a>
+    </footer>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
+<script src="../script.js"></script>
+</body>
+</html>

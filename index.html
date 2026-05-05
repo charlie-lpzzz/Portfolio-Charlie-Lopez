@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charlie Lopez - Direction Artistique & Marketing Digital</title>
+  <meta name="description"
+    content="Portfolio de Charlie Lopez, Étudiant en Mastère Direction Artistique au Digital Campus." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Syne:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Preload work__hover covers so first hover ne flashe pas -->
+  <link rel="preload" as="image" href="images/Affiches_Laylow/Minia%20Laylow%20Portfolio%20HD.png">
+  <link rel="preload" as="image" href="images/CDJ/Banni%C3%A8re_CDJ.jpg">
+  <link rel="preload" as="image" href="images/Kapu/PAO%20Projet%20KAPU-01.jpg">
+  <link rel="preload" as="image" href="images/photo-Charlie.png">
+</head>
+
+<body>
+
+  <!-- ================== LOADER ================== -->
+  <div class="loader">
+    <div class="loader__inner">
+      <div class="loader__count"><span id="count">0</span><i>%</i></div>
+      <div class="loader__bar"><span></span></div>
+      <div class="loader__name">CHARLIE&nbsp;LOPEZ</div>
+    </div>
+  </div>
+
+  <!-- ================== CUSTOM CURSOR ================== -->
+  <div class="cursor"></div>
+
+  <!-- ================== NOISE OVERLAY ================== -->
+  <div class="noise"></div>
+
+  <!-- ================== NAV ================== -->
+  <header class="nav">
+    <a href="#home" class="nav__logo" data-cursor="hover">CL<span>©</span></a>
+    <nav class="nav__menu">
+      <a href="#about" data-cursor="hover">À propos</a>
+      <a href="#work" data-cursor="hover">Réalisations</a>
+      <a href="#experiences" data-cursor="hover">Expériences</a>
+      <a href="#skills" data-cursor="hover">Skills</a>
+      <a href="#contact" data-cursor="hover">Contact</a>
+    </nav>
+    <a href="mailto:charlielpz05@gmail.com" class="nav__cta" data-cursor="hover" aria-label="Me contacter par email">
+      <i class="nav__cta-dot"></i>
+      <span class="nav__cta-label">
+        <span>Disponible</span>
+        <span>Me contacter</span>
+      </span>
+      <svg class="nav__cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- ================== MAIN SCROLL ================== -->
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home">
+      <canvas id="webgl"></canvas>
+
+      <div class="hero__content">
+        <div class="hero__meta" data-scroll data-scroll-speed="1">
+        </div>
+
+        <h1 class="hero__title">
+          <span class="line"><span>Portfolio</span></span>
+          <span class="line"><span><em>Charlie Lopez</em></span></span>
+        </h1>
+
+        <div class="hero__bottom">
+          <p class="hero__desc" data-scroll data-scroll-speed="1">
+            Étudiant en Mastère Direction&nbsp;Artistique<br>
+            à Digital&nbsp;Campus, je façonne des<br>
+            identités visuelles &amp; expériences digitales.
+          </p>
+          <div class="hero__scroll" data-cursor="hover">
+            <span>Scroll</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1 1l12 12M13 13V3M13 13H3" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marquee tendance -->
+      <div class="marquee">
+        <div class="marquee__track">
+          <span>Branding</span><i>✦</i>
+          <span>Social Media</span><i>✦</i>
+          <span>Web Design</span><i>✦</i>
+          <span>Direction Artistique</span><i>✦</i>
+          <span>Branding</span><i>✦</i>
+          <span>Social Media</span><i>✦</i>
+          <span>Web Design</span><i>✦</i>
+          <span>Direction Artistique</span><i>✦</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about" id="about">
+      <span class="section__index">01 / À propos</span>
+
+      <div class="about__layout">
+        <figure class="about__photo">
+          <img src="images/photo-Charlie.png" alt="Portrait de Charlie Lopez" loading="lazy" decoding="async">
+          <figcaption>Charlie Lopez - Marsillargues, 2026</figcaption>
+        </figure>
+
+        <div class="about__copy">
+          <div class="about__bio">
+            <p>
+              Hello, moi c'est <strong>Charlie</strong>, j'ai 22 ans. J'ai eu la chance de vivres <em>11 ans à Bali</em>, une vie entre deux cultures qui a forgé ma curiosité et mon regard sur le monde.
+            </p>
+            <p>
+              De retour en France, je me suis orienté vers ce qui me passionne vraiment : le <strong>design graphique</strong>, le <strong>montage vidéo</strong> et la <strong>communication digitale</strong>. Trois années d'études m'ont confirmé que la direction artistique était ma voie.
+            </p>
+            <p>
+              Après deux expériences professionnelles concrètes, dont une <strong>alternance de deux ans au Conseil Départemental du Gard</strong>, je poursuis aujourd'hui un <strong>Mastère Direction Artistique à Digital Campus Montpellier</strong>.
+            </p>
+            <p>
+              Je suis actuellement en recherche active d'une <strong>alternance en communication ou marketing digital</strong>. Bilingue anglais, véhiculé, motivé.
+            </p>
+          </div>
+
+          <div class="about__interests">
+            <span>Formule 1</span>
+            <span>Voyage</span>
+            <span>Musique</span>
+            <span>Jeux vidéo</span>
+            <span>Animés</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RÉALISATIONS ============ -->
+    <section class="work" id="work">
+      <div class="work__head">
+        <span class="section__index">02 / Réalisations</span>
+        <h2 class="work__title">
+          <span>Mes</span>
+          <span><em>Réalisations</em> ↗</span>
+        </h2>
+      </div>
+
+      <div class="work__list">
+
+        <a href="projects/laylow.html" class="work__item" data-cursor="view">
+          <div class="work__num">/01</div>
+          <div class="work__info">
+            <h3>Affiches Laylow</h3>
+            <p>Série d'affiches - Direction artistique &amp; identité visuelle autour de l'univers du rappeur Laylow.
+            </p>
+          </div>
+          <div class="work__meta">
+            <span>Projet école</span>
+            <span>Print · DA</span>
+            <span>Musique</span>
+          </div>
+          <div class="work__hover">
+            <div class="work__hover-img"
+              style="background: url('images/Affiches_Laylow/Minia%20Laylow%20Portfolio%20HD.png') center/cover no-repeat #0d0d0c;">
+            </div>
+          </div>
+        </a>
+
+        <a href="projects/conseil-gard.html" class="work__item" data-cursor="view">
+          <div class="work__num">/02</div>
+          <div class="work__info">
+            <h3>Conseil Départemental des Jeunes</h3>
+            <p>Identité visuelle &amp; déclinaisons — Création de la bannière et des badges thématiques (Citoyenneté,
+              DD, QVC, Solidarités).</p>
+          </div>
+          <div class="work__meta">
+            <span>2023 - 2025</span>
+            <span>Branding · Print</span>
+            <span>Institutionnel</span>
+          </div>
+          <div class="work__hover">
+            <div class="work__hover-img"
+              style="background: url('images/CDJ/Banni%C3%A8re_CDJ.jpg') center/cover no-repeat #14a8b8;"></div>
+          </div>
+        </a>
+
+        <a href="projects/kapu.html" class="work__item" data-cursor="view">
+          <div class="work__num">/03</div>
+          <div class="work__info">
+            <h3>Kapu</h3>
+            <p>Direction artistique &amp; identité visuelle — Conception graphique du projet Kapu.</p>
+          </div>
+          <div class="work__meta">
+            <span>Projet école</span>
+            <span>Branding</span>
+            <span>Identité visuelle</span>
+          </div>
+          <div class="work__hover">
+            <div class="work__hover-img"
+              style="background: url('images/Kapu/PAO%20Projet%20KAPU-01.jpg') center/cover no-repeat #0d0d0c;"></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ============ EXPÉRIENCES ============ -->
+    <section class="exp" id="experiences">
+      <div class="exp__head">
+        <span class="section__index">03 / Expériences</span>
+        <h2 class="exp__title">
+          <span>Mes</span>
+          <span><em>Expériences</em></span>
+        </h2>
+      </div>
+
+      <ul class="exp__list">
+
+        <li class="exp__item" data-cursor="hover">
+          <div class="exp__main">
+            <div class="exp__year">2023 — 2025</div>
+            <div class="exp__company">
+              <h3>Conseil Départemental du Gard</h3>
+              <p>Alternant Communication · Nîmes</p>
+            </div>
+            <div class="exp__tag">Alternance · 2 ans</div>
+            <div class="exp__plus">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </div>
+          </div>
+          <div class="exp__missions">
+            <div>
+              <span class="exp__missions-label">Missions</span>
+              <ul>
+                <li>Création de visuels pour campagnes institutionnelles &amp; événementielles</li>
+                <li>Montage vidéo (interviews, reportages, captations)</li>
+                <li>Gestion &amp; mise à jour du site internet du département</li>
+                <li>Création de posts Instagram &amp; TikTok (formats verticaux, motion)</li>
+                <li>Veille tendances &amp; benchmark des collectivités</li>
+                <li>Conseil créatif auprès des chefs de projet</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="exp__item" data-cursor="hover">
+          <div class="exp__main">
+            <div class="exp__year">Janv. - Mai 2023</div>
+            <div class="exp__company">
+              <h3>L'Appart Fitness</h3>
+              <p>Stagiaire Community Manager · Aigues-Mortes</p>
+            </div>
+            <div class="exp__tag">Stage · 2 mois</div>
+            <div class="exp__plus">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </div>
+          </div>
+          <div class="exp__missions">
+            <div>
+              <span class="exp__missions-label">Missions</span>
+              <ul>
+                <li>Création de posts &amp; stories Instagram et Facebook</li>
+                <li>Production de visuels (cartes promo, story templates)</li>
+                <li>Mailing &amp; newsletters aux abonnés</li>
+                <li>Montage vidéo (workouts, témoignages)</li>
+                <li>Veille concurrentielle</li>
+                <li>Animation de la communauté</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="exp__item" data-cursor="hover">
+          <div class="exp__main">
+            <div class="exp__year">Été 2020 - 2022</div>
+            <div class="exp__company">
+              <h3>Le Moaï - Bar Tapas</h3>
+              <p>Commis de bar · Le Grau-du-Roi</p>
+            </div>
+            <div class="exp__tag">Saisonnier · 3 étés</div>
+            <div class="exp__plus">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </div>
+          </div>
+          <div class="exp__missions">
+            <div>
+              <span class="exp__missions-label">Missions</span>
+              <ul>
+                <li>Création de cocktails &amp; carte des boissons</li>
+                <li>Mise en place du bar avant chaque service</li>
+                <li>Relation client : conseil, prise de commande, ambiance</li>
+                <li>Plonge &amp; gestion des stocks</li>
+                <li>Coordination avec la salle pendant le rush</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li class="exp__item" data-cursor="hover">
+          <div class="exp__main">
+            <div class="exp__year">2 mois</div>
+            <div class="exp__company">
+              <h3>Les Trois Gourmands</h3>
+              <p>Vendeur boulangerie · Le Grau-du-Roi</p>
+            </div>
+            <div class="exp__tag">CDD · Vente</div>
+            <div class="exp__plus">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </div>
+          </div>
+          <div class="exp__missions">
+            <div>
+              <span class="exp__missions-label">Missions</span>
+              <ul>
+                <li>Mise en place de la vitrine (pain, pâtisseries, salé)</li>
+                <li>Vente &amp; encaissement</li>
+                <li>Gestion quotidienne de la boulangerie</li>
+                <li>Cuisson du pain en cours de journée</li>
+                <li>Réception &amp; contrôle des commandes fournisseurs</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="skills" id="skills">
+      <div class="skills__head">
+        <span class="section__index">04 / Compétences</span>
+        <h2>Toolbox</h2>
+      </div>
+
+      <div class="skills__grid">
+        <div class="skills__col">
+          <h4>Hard skills</h4>
+          <ul class="skills__list">
+            <li><span>01</span> Adobe Illustrator <i>Expert</i></li>
+            <li><span>02</span> Adobe InDesign <i>Avancé</i></li>
+            <li><span>03</span> Premiere Pro <i>Avancé</i></li>
+            <li><span>04</span> Canva <i>Expert</i></li>
+            <li><span>05</span> Meta Business Suite <i>Avancé</i></li>
+            <li><span>06</span> Instagram / TikTok <i>Expert</i></li>
+          </ul>
+        </div>
+
+        <div class="skills__col">
+          <h4>Soft skills</h4>
+          <ul class="skills__list">
+            <li><span>01</span> Curieux</li>
+            <li><span>02</span> Autonome</li>
+            <li><span>03</span> Organisé</li>
+            <li><span>04</span> Rigoureux</li>
+            <li><span>05</span> Esprit d'équipe</li>
+            <li><span>06</span> Flexible &amp; Ponctuel</li>
+          </ul>
+        </div>
+
+        <div class="skills__col">
+          <h4>Formation</h4>
+          <ul class="skills__list">
+            <li><span>’25 → ’27</span> Mastère DA · Digital Campus</li>
+            <li><span>’22 — ’25</span> Bachelor Création Visuelle &amp; Digitale</li>
+            <li><span>’21 — ’22</span> Baccalauréat Général · Mention AB</li>
+            <li><span>’20 — ’21</span> Brevet d'Initiation Aéronautique</li>
+            <li><span>’07 — ’17</span> Lycée Français de Bali · Billingue anglais</li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- second marquee -->
+      <div class="marquee marquee--invert">
+        <div class="marquee__track">
+          <span>Illustrator</span><i>●</i>
+          <span>InDesign</span><i>●</i>
+          <span>Premiere Pro</span><i>●</i>
+          <span>Canva</span><i>●</i>
+          <span>Meta</span><i>●</i>
+          <span>TikTok</span><i>●</i>
+          <span>Illustrator</span><i>●</i>
+          <span>InDesign</span><i>●</i>
+          <span>Premiere Pro</span><i>●</i>
+          <span>Canva</span><i>●</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact">
+      <span class="section__index">05 / Contact</span>
+
+      <h2 class="contact__title">
+        <span>On</span>
+        <span><em>collabore</em>?</span>
+      </h2>
+
+      <a href="mailto:charlielpz05@gmail.com" class="contact__mail" data-cursor="hover">
+        charlielpz05@gmail.com
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M5 5l30 30M35 35V10M35 35H10" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </a>
+
+      <div class="contact__grid">
+        <div>
+          <span>Téléphone</span>
+          <a href="tel:+33754323046" data-cursor="hover">+33 7 54 32 30 46</a>
+        </div>
+        <div>
+          <span>Instagram</span>
+          <a href="https://instagram.com/charlie.lpzzz" target="_blank" rel="noopener" data-cursor="hover">@Charlie
+            Lopez</a>
+        </div>
+        <div>
+          <span>Localisation</span>
+          <a data-cursor="hover">Marsillargues - FR</a>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span>© 2026 Charlie Lopez</span>
+        <a href="#home" data-cursor="hover">↑ Back to top</a>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ================== LIBS ================== -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
