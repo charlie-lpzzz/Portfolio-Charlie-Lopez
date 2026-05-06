@@ -7,40 +7,60 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ------------------------------------------------
    1.  LOADER
-   - Skipped en visite mise en cache (sessionStorage)
-   - Beaucoup plus rapide (≈ 600 ms total au lieu de ≈ 2 s)
-   pour ne pas plomber le LCP de PageSpeed.
+   Le compteur démarre IMMÉDIATEMENT au parsing de script.js
+   (pas dans 'load') → animation toujours visible et complète.
+   runLoader() attend que les deux soient vrais :
+     ① animation 0→100 terminée  ② page 'load' reçu
+   Les deux conditions peuvent arriver dans n'importe quel ordre.
+   Impact performance : zéro — rAF ne bloque pas le thread.
 ------------------------------------------------ */
-const loader   = document.querySelector('.loader');
-const counter  = document.getElementById('count');
-const bar      = document.querySelector('.loader__bar span');
+const loader  = document.querySelector('.loader');
+const counter = document.getElementById('count');
+const bar     = document.querySelector('.loader__bar span');
+
+let _animDone      = false;
+let _pageDone      = false;
+let _loaderResolve = null;
+
+function _tryExit() {
+  if (!_animDone || !_pageDone || !_loaderResolve) return;
+  gsap.to(loader, {
+    y: '-100%', duration: 0.6, ease: 'expo.inOut',
+    onComplete: () => { loader.style.display = 'none'; _loaderResolve(); }
+  });
+}
+
+// Démarrer le compteur dès maintenant
+if (sessionStorage.getItem('cl_visited')) {
+  // Visite mise en cache dans la session → skip silencieux
+  loader.style.display = 'none';
+  _animDone = true;
+  _pageDone = true;
+} else {
+  sessionStorage.setItem('cl_visited', '1');
+
+  const COUNT_DURATION = 1400; // ms — animation visible et élégante
+  const t0 = performance.now();
+
+  // Easing léger : démarre vite, ralentit vers la fin (réaliste)
+  const ease = p => p < 0.85 ? p / 0.85 * 0.92 : 0.92 + (p - 0.85) / 0.15 * 0.08;
+
+  const tick = (now) => {
+    const p   = Math.min(1, (now - t0) / COUNT_DURATION);
+    const val = Math.round(ease(p) * 100);
+    counter.textContent = val;
+    bar.style.width     = val + '%';
+    if (p < 1) requestAnimationFrame(tick);
+    else { _animDone = true; _tryExit(); }
+  };
+  requestAnimationFrame(tick);
+}
 
 function runLoader() {
   return new Promise(resolve => {
-    // Visite déjà cached → on skip l'animation
-    if (sessionStorage.getItem('cl_visited')) {
-      loader.style.display = 'none';
-      return resolve();
-    }
-    sessionStorage.setItem('cl_visited', '1');
-
-    const start = performance.now();
-    const COUNT_DURATION = 350; // ms
-
-    const tick = (t) => {
-      const p = Math.min(1, (t - start) / COUNT_DURATION);
-      const val = Math.round(p * 100);
-      counter.textContent = val;
-      bar.style.width = val + '%';
-      if (p < 1) requestAnimationFrame(tick);
-      else {
-        gsap.to(loader, {
-          y: '-100%', duration: 0.5, ease: 'expo.inOut',
-          onComplete: () => { loader.style.display = 'none'; resolve(); }
-        });
-      }
-    };
-    requestAnimationFrame(tick);
+    _loaderResolve = resolve;
+    _pageDone      = true;
+    _tryExit();  // résout immédiatement si l'animation est déjà finie
   });
 }
 
