@@ -65,11 +65,16 @@ document.querySelectorAll('[data-cursor="view"]').forEach(el => {
 });
 
 /* ------------------------------------------------
-   3.  THREE.JS — Distorted sphere in hero
+   3.  THREE.JS — Distorted sphere in hero (desktop only)
 ------------------------------------------------ */
 function initThree() {
   const canvas = document.getElementById('webgl');
   if (!canvas) return;
+  // Three.js n'est pas chargé sur mobile → on cache juste le canvas
+  if (typeof THREE === 'undefined') {
+    canvas.style.display = 'none';
+    return;
+  }
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
