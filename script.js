@@ -18,18 +18,13 @@ const bar     = document.querySelector('.loader__bar span');
 
 function runLoader() {
   return new Promise(resolve => {
-    if (sessionStorage.getItem('cl_visited')) {
-      loader.style.display = 'none';
-      return resolve();
-    }
-    sessionStorage.setItem('cl_visited', '1');
-
-    // GSAP anime l'objet {val} de 0 à 100 en 0.7s
+    // GSAP anime l'objet {val} de 0 à 100 en 0.7s (linéaire = look authentique)
+    // Pas de sessionStorage : loader visible à chaque chargement/rechargement
     const obj = { val: 0 };
     gsap.to(obj, {
       val: 100,
       duration: 0.7,
-      ease: 'none',          // linéaire = look authentique de compteur
+      ease: 'none',
       onUpdate() {
         const v = Math.round(obj.val);
         counter.textContent = v;
@@ -509,24 +504,25 @@ function initActiveNav() {
 
 /* ------------------------------------------------
    8.  BOOT
-   Ordre :
-   1) Loader (très court ou skippé)
-   2) Tout le reste (Lenis, GSAP, hover, etc.)
-   3) Three.js en lazy-load après que la page soit interactive
+   Stratégie :
+   - runLoader() tourne EN PARALLÈLE (pas de await) → ne bloque pas le LCP.
+   - initHeroAnimations() démarre immédiatement → LCP mesuré tôt (= score élevé).
+   - Le loader joue par-dessus comme overlay cosmétique (0.7s + 0.5s slide).
+   - Three.js : lazy-load sur scroll/clic → hors fenêtre TBT.
 ------------------------------------------------ */
-window.addEventListener('load', async () => {
-  await runLoader();
+window.addEventListener('load', () => {
+  runLoader();  // cosmétique — ne bloque pas le reste
 
-  // ── Tâche 1 : Lenis + animations hero (visible immédiatement, pas de scroll nécessaire)
+  // ── Tâche 1 : Lenis + animations hero (démarre immédiatement pour le LCP)
   initLenis();
-  initHeroAnimations();     // nav + titre hero uniquement
+  initHeroAnimations();
   initWorkHover();
   initActiveNav();
 
-  // ── Tâche 2 : ScrollTrigger + Three.js en interaction (yield 1 frame d'abord)
+  // ── Tâche 2 : ScrollTrigger + Three.js (yield 1 frame pour ne pas créer une long task)
   setTimeout(() => {
-    initScrollAnimations();   // toutes les ScrollTrigger
-    ScrollTrigger.refresh();  // coûteux → après le yield
-    loadThreeLazy();          // charge sur scroll/clic → hors fenêtre TBT
+    initScrollAnimations();
+    ScrollTrigger.refresh();
+    loadThreeLazy();
   }, 0);
 });
