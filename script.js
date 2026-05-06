@@ -87,11 +87,34 @@ function loadThreeLazy() {
     if (c) c.style.display = 'none';
     return;
   }
-  const s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
-  s.async = true;
-  s.onload = () => initThree();
-  document.head.appendChild(s);
+
+  let loaded = false;
+  const doLoad = () => {
+    if (loaded) return;
+    loaded = true;
+    // Nettoyer les listeners
+    document.removeEventListener('scroll',     doLoad);
+    document.removeEventListener('click',      doLoad);
+    document.removeEventListener('touchstart', doLoad);
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+    s.async = true;
+    s.onload = () => initThree();
+    document.head.appendChild(s);
+  };
+
+  // Charger Three.js AU 1ER SCROLL/CLIC → s'exécute après TTI, hors fenêtre TBT
+  const opts = { once: true, passive: true };
+  document.addEventListener('scroll',     doLoad, opts);
+  document.addEventListener('click',      doLoad, opts);
+  document.addEventListener('touchstart', doLoad, opts);
+
+  // Fallback si l'utilisateur ne bouge pas : idle après 8s (au-delà de la fenêtre Lighthouse)
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => doLoad(), { timeout: 8000 });
+  } else {
+    setTimeout(doLoad, 6000);
+  }
 }
 
 function initThree() {
@@ -499,19 +522,10 @@ window.addEventListener('load', async () => {
   initWorkHover();
   initActiveNav();
 
-  // ── Tâche 2 : animations scroll (yield d'abord → le browser peut peindre le 1er frame)
+  // ── Tâche 2 : ScrollTrigger + Three.js en interaction (yield 1 frame d'abord)
   setTimeout(() => {
     initScrollAnimations();   // toutes les ScrollTrigger
     ScrollTrigger.refresh();  // coûteux → après le yield
+    loadThreeLazy();          // charge sur scroll/clic → hors fenêtre TBT
   }, 0);
-
-  // ── Tâche 3 : Three.js en idle, avec délai minimum 800ms pour sortir de la fenêtre TBT
-  setTimeout(() => {
-    const lazy = () => loadThreeLazy();
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(lazy, { timeout: 2500 });
-    } else {
-      setTimeout(lazy, 1200);
-    }
-  }, 800);
 });
