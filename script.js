@@ -7,6 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ------------------------------------------------
    1.  LOADER
+   - Skipped en visite mise en cache (sessionStorage)
+   - Beaucoup plus rapide (≈ 600 ms total au lieu de ≈ 2 s)
+   pour ne pas plomber le LCP de PageSpeed.
 ------------------------------------------------ */
 const loader   = document.querySelector('.loader');
 const counter  = document.getElementById('count');
@@ -14,22 +17,30 @@ const bar      = document.querySelector('.loader__bar span');
 
 function runLoader() {
   return new Promise(resolve => {
-    let val = 0;
-    const tick = () => {
-      val += Math.random() * 6 + 2;
-      if (val >= 100) val = 100;
-      counter.textContent = Math.floor(val);
+    // Visite déjà cached → on skip l'animation
+    if (sessionStorage.getItem('cl_visited')) {
+      loader.style.display = 'none';
+      return resolve();
+    }
+    sessionStorage.setItem('cl_visited', '1');
+
+    const start = performance.now();
+    const COUNT_DURATION = 350; // ms
+
+    const tick = (t) => {
+      const p = Math.min(1, (t - start) / COUNT_DURATION);
+      const val = Math.round(p * 100);
+      counter.textContent = val;
       bar.style.width = val + '%';
-      if (val < 100) requestAnimationFrame(tick);
+      if (p < 1) requestAnimationFrame(tick);
       else {
         gsap.to(loader, {
-          y: '-100%', duration: 1.2, ease: 'expo.inOut',
-          delay: 0.3,
+          y: '-100%', duration: 0.5, ease: 'expo.inOut',
           onComplete: () => { loader.style.display = 'none'; resolve(); }
         });
       }
     };
-    tick();
+    requestAnimationFrame(tick);
   });
 }
 
@@ -66,15 +77,27 @@ document.querySelectorAll('[data-cursor="view"]').forEach(el => {
 
 /* ------------------------------------------------
    3.  THREE.JS — Distorted sphere in hero (desktop only)
+   Three.js est lazy-loaded depuis le bootstrap après le premier paint
+   pour ne pas bloquer le LCP. Sur mobile le canvas reste caché via CSS.
 ------------------------------------------------ */
+function loadThreeLazy() {
+  // Pas de Three.js sur mobile (560 KB inutiles)
+  if (window.innerWidth < 768) {
+    const c = document.getElementById('webgl');
+    if (c) c.style.display = 'none';
+    return;
+  }
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+  s.async = true;
+  s.onload = () => initThree();
+  document.head.appendChild(s);
+}
+
 function initThree() {
   const canvas = document.getElementById('webgl');
   if (!canvas) return;
-  // Three.js n'est pas chargé sur mobile → on cache juste le canvas
-  if (typeof THREE === 'undefined') {
-    canvas.style.display = 'none';
-    return;
-  }
+  if (typeof THREE === 'undefined') return;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
@@ -474,13 +497,24 @@ function initActiveNav() {
 
 /* ------------------------------------------------
    8.  BOOT
+   Ordre :
+   1) Loader (très court ou skippé)
+   2) Tout le reste (Lenis, GSAP, hover, etc.)
+   3) Three.js en lazy-load après que la page soit interactive
 ------------------------------------------------ */
 window.addEventListener('load', async () => {
-  initThree();
   await runLoader();
   initLenis();
   initAnimations();
   initWorkHover();
   initActiveNav();
   ScrollTrigger.refresh();
+
+  // Three.js : on le charge en idle pour ne pas bloquer le LCP
+  const lazy = () => loadThreeLazy();
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(lazy, { timeout: 1500 });
+  } else {
+    setTimeout(lazy, 600);
+  }
 });
