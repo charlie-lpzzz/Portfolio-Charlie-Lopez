@@ -106,7 +106,7 @@ function initThree() {
   const camera = new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
   camera.position.z = 3;
 
-  const geo = new THREE.IcosahedronGeometry(1.2, 60);
+  const geo = new THREE.IcosahedronGeometry(1.2, 10); // 60→10 : 36k→1k vertices, shader lisse de toute façon
   const mat = new THREE.ShaderMaterial({
     uniforms: {
       uTime:     { value: 0 },
@@ -179,7 +179,7 @@ function initThree() {
   scene.add(blob);
 
   const partGeo = new THREE.BufferGeometry();
-  const N = 1200;
+  const N = 320; // 1200→320 : moins de CPU pour les points
   const pos = new Float32Array(N*3);
   for (let i=0;i<N;i++){
     pos[i*3]   = (Math.random()-0.5)*8;
@@ -257,61 +257,60 @@ function initLenis() {
 
 /* ------------------------------------------------
    5.  GSAP ANIMATIONS
+   Divisé en deux pour ne pas créer une long task unique :
+   - initHeroAnimations : visible immédiatement, pas de ScrollTrigger
+   - initScrollAnimations : tout ce qui nécessite ScrollTrigger (déféré)
 ------------------------------------------------ */
-function initAnimations() {
-  // -- HERO TITLE reveal
+
+function initHeroAnimations() {
+  // Nav + hero title + hero baseline — visible dès le premier frame
+  gsap.from('.nav', { y: -30, opacity: 0, duration: 1.0, ease: 'expo.out', delay: 0.3 });
+
   if (document.querySelector('.hero__title')) {
     gsap.to('.hero__title .line > span', {
       y: 0, duration: 1.4, ease: 'expo.out',
-      stagger: 0.12, delay: 0.2
+      stagger: 0.12, delay: 0.15
     });
   }
   gsap.from('.hero__meta, .hero__desc, .hero__scroll', {
     y: 40, opacity: 0, duration: 1.1,
-    ease: 'expo.out', stagger: 0.15, delay: 0.8
+    ease: 'expo.out', stagger: 0.15, delay: 0.7
   });
-  gsap.from('.nav', { y:-30, opacity:0, duration:1.0, ease:'expo.out', delay:0.5 });
+}
 
-  // -- ABOUT photo : fade + slight scale-up on enter
+function initScrollAnimations() {
+  // -- ABOUT photo
   if (document.querySelector('.about__photo')) {
     gsap.from('.about__photo', {
       scrollTrigger: { trigger: '.about__layout', start: 'top 80%' },
-      y: 60, opacity: 0, scale: 0.97,
-      duration: 1.1, ease: 'expo.out'
+      y: 60, opacity: 0, scale: 0.97, duration: 1.1, ease: 'expo.out'
     });
   }
 
-  // -- ABOUT bio paragraphs : staggered reveal
+  // -- ABOUT bio
   if (document.querySelector('.about__bio p')) {
     gsap.from('.about__bio p', {
       scrollTrigger: { trigger: '.about__bio', start: 'top 80%' },
-      y: 30, opacity: 0,
-      duration: 1.0, ease: 'expo.out',
-      stagger: 0.12
+      y: 30, opacity: 0, duration: 1.0, ease: 'expo.out', stagger: 0.12
     });
   }
 
-  // -- ABOUT interest tags : pop in stagger
+  // -- ABOUT tags
   if (document.querySelector('.about__interests span')) {
     gsap.from('.about__interests span', {
       scrollTrigger: { trigger: '.about__interests', start: 'top 90%' },
-      y: 20, opacity: 0,
-      duration: 0.7, ease: 'expo.out',
-      stagger: 0.06
+      y: 20, opacity: 0, duration: 0.7, ease: 'expo.out', stagger: 0.06
     });
   }
 
-  // -- WORK title
+  // -- WORK
   gsap.from('.work__title span', {
     scrollTrigger: { trigger: '.work__title', start: 'top 85%' },
     y: '110%', duration: 1.2, ease: 'expo.out', stagger: 0.1
   });
-
-  // -- WORK items
   gsap.from('.work__item', {
     scrollTrigger: { trigger: '.work__list', start: 'top 80%' },
-    y: 60, opacity: 0, duration: 1.0, ease: 'expo.out',
-    stagger: 0.12
+    y: 60, opacity: 0, duration: 1.0, ease: 'expo.out', stagger: 0.12
   });
 
   // -- SKILLS
@@ -331,10 +330,7 @@ function initAnimations() {
     y: '110%', duration: 1.3, ease: 'expo.out', stagger: 0.12
   });
 
-  // -- Project gallery tiles : staggered reveal as the gallery enters view.
-  // Using set + ScrollTrigger.create({once:true}) instead of gsap.from() —
-  // more deterministic when Lenis is intercepting scroll (the gsap.from +
-  // implicit toggleActions could leave tiles stuck at opacity 0).
+  // -- Project gallery tiles
   if (document.querySelector('.project-gallery')) {
     const tiles = document.querySelectorAll('.project-gallery .tile');
     gsap.set(tiles, { y: 60, opacity: 0, scale: 0.96 });
@@ -352,27 +348,19 @@ function initAnimations() {
     });
   }
 
-  // -- Hero parallax on scroll
+  // -- Hero parallax (canvas)
   if (document.getElementById('webgl')) {
     gsap.to('#webgl', {
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top', end: 'bottom top',
-        scrub: true
-      },
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
       y: 100, scale: 0.95, opacity: 0.6
     });
   }
 
-  // -- Parallax for [data-scroll-speed]
+  // -- data-scroll-speed parallax
   document.querySelectorAll('[data-scroll-speed]').forEach(el => {
     const speed = parseFloat(el.dataset.scrollSpeed);
     gsap.to(el, {
-      scrollTrigger: {
-        trigger: el,
-        start: 'top bottom', end: 'bottom top',
-        scrub: true
-      },
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
       y: -speed * 30
     });
   });
@@ -504,17 +492,26 @@ function initActiveNav() {
 ------------------------------------------------ */
 window.addEventListener('load', async () => {
   await runLoader();
+
+  // ── Tâche 1 : Lenis + animations hero (visible immédiatement, pas de scroll nécessaire)
   initLenis();
-  initAnimations();
+  initHeroAnimations();     // nav + titre hero uniquement
   initWorkHover();
   initActiveNav();
-  ScrollTrigger.refresh();
 
-  // Three.js : on le charge en idle pour ne pas bloquer le LCP
-  const lazy = () => loadThreeLazy();
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(lazy, { timeout: 1500 });
-  } else {
-    setTimeout(lazy, 600);
-  }
+  // ── Tâche 2 : animations scroll (yield d'abord → le browser peut peindre le 1er frame)
+  setTimeout(() => {
+    initScrollAnimations();   // toutes les ScrollTrigger
+    ScrollTrigger.refresh();  // coûteux → après le yield
+  }, 0);
+
+  // ── Tâche 3 : Three.js en idle, avec délai minimum 800ms pour sortir de la fenêtre TBT
+  setTimeout(() => {
+    const lazy = () => loadThreeLazy();
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(lazy, { timeout: 2500 });
+    } else {
+      setTimeout(lazy, 1200);
+    }
+  }, 800);
 });
