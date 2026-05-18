@@ -415,7 +415,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: 0.85fr 1.15fr;
   gap: 80px;
   margin-top: 60px;
-  align-items: start;
+  align-items: center;
 }
 
 /* === Photo column === */
@@ -451,7 +451,6 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding-top: 12px;
 }
 .about__bio {
   display: flex;
